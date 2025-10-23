@@ -1,5 +1,5 @@
 import { FaStar } from "react-icons/fa";
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { addToStored } from "../../utility/addToDb";
 import useBooksData from "../../Hooks/useBooks";
 import Swal from "sweetalert2";
@@ -9,6 +9,7 @@ const MySwal = withReactContent(Swal);
 
 const BookDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const { books, loading } = useBooksData();
   if (loading) {
@@ -35,7 +36,7 @@ const BookDetails = () => {
   } = singleBook;
 
   const handleMarkedAsRead = (id) => {
-    addToStored(id);
+    addToStored(id,navigate);
   };
 
   return (

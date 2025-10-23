@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import useBooks from "../../Hooks/useBooks";
 import { getStoreBook, removeFromStored } from "../../utility/addToDb";
 import ReadBook from "../ReadBook/ReadBook";
+import { useNavigate } from "react-router";
 
 const ReadBooks = () => {
   const { books, loading } = useBooks();
   const [readBooks, setReadBooks] = useState([]);
   const [updateKey, setUpdateKey] = useState(0);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const storedBook = getStoreBook();
@@ -21,7 +23,7 @@ const ReadBooks = () => {
   };
 
   const handleMarkedUnread = (bookId) => {
-    removeFromStored(bookId);
+    removeFromStored(bookId, navigate);
     Rerender();
   };
 
