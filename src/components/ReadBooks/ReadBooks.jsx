@@ -3,12 +3,13 @@ import useBooks from "../../Hooks/useBooks";
 import { getStoreBook, removeFromStored } from "../../utility/addToDb";
 import ReadBook from "../ReadBook/ReadBook";
 import { useNavigate } from "react-router";
+import dataNotAvailable from "../../assets/data-not-available.jpeg";
 
 const ReadBooks = () => {
   const { books, loading } = useBooks();
   const [readBooks, setReadBooks] = useState([]);
   const [updateKey, setUpdateKey] = useState(0);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedBook = getStoreBook();
@@ -35,15 +36,24 @@ const ReadBooks = () => {
     );
   }
 
+  const length = readBooks.length;
+  console.log(length);
+
   return (
     <div className="mt-10">
-      {readBooks.map((readBook) => (
-        <ReadBook
-          key={readBook.bookId}
-          readBook={readBook}
-          handleMarkedUnread={handleMarkedUnread}
-        />
-      ))}
+      {length > 0 ? (
+        readBooks.map((readBook) => (
+          <ReadBook
+            key={readBook.bookId}
+            readBook={readBook}
+            handleMarkedUnread={handleMarkedUnread}
+          />
+        ))
+      ) : (
+        <div className=" h-[300px] flex items-center justify-center">
+          <img className="w-[500px]" src={dataNotAvailable} alt="" />
+        </div>
+      )}
     </div>
   );
 };
